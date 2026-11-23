@@ -57,6 +57,9 @@ flow resistance that passes flow in either direction (unless <code>checkValve = 
 example natural circulation. At zero or positive speed, reverse flow meets a resistance that opposes
 it. Below <code>V_flow_small</code> the resistance term turns linear
 (<code>Modelica.Fluid.Utilities.regSquare</code>) so that its derivative is not zero at zero flow.</p>
+<p>With the pump's default volume <code>V = 0</code>, its energy balance does not fix its specific
+enthalpy at exactly zero flow, and a solver restarting there (at an event) can find a wrong value.
+If the flow through a pump may stop or reverse, give the pump a volume <code>V &gt; 0</code>.</p>
 <p>With <code>PerformanceCurve</code> the head of a stopped pump goes to zero, so it offers no
 resistance and the flow through it is limited only by the rest of the circuit. Use this one when a
 pump may stop.</p>

@@ -73,7 +73,7 @@ equation
         coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
 <p>Pump head characteristic in the form
-<code>head = affinityLaw * f(V_flow, V_flow_curve, head_curve, N/N_nominal)</code>, solving for
+<code>head = affinityLaw * f(V_flow/(diameter/diameter_nominal)&sup3;, V_flow_curve, head_curve, N/N_nominal)</code>, solving for
 head given volumetric flow, scaled by the affinity laws: the curve is read at the flow
 <code>V_flow/(diameter/diameter_nominal)&sup3;</code> (the function itself divides it by the
 relative speed) and its head is multiplied by

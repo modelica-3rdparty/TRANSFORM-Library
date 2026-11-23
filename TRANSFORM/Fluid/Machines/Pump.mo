@@ -75,6 +75,7 @@ equation
 <h4>Use</h4>
 <ul>
 <li><code>controlType = \"pressure\"</code> sets the pressure at the port whose state the pump exposes: the outlet with <code>exposeState_b = true</code>, the inlet with the default <code>exposeState_a = true</code>.</li>
+<li>If the flow through the pump may stop or reverse, give it a volume <code>V &gt; 0</code> (see <code>BaseClasses.PartialPump</code>).</li>
 </ul>
 </html>"), Icon(coordinateSystem(preserveAspectRatio=true, extent={{-100,-100},
             {100,100}})));

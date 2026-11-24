@@ -7,7 +7,7 @@ partial model PartialPowerChar
   input SI.MassFlowRate m_flow;
   SI.Power W "Power consumption";
 equation
-    affinityLaw = (N/N_nominal)^3*(diameter/diameter_nominal)^5;
+    affinityLaw = (N/N_nominal)^3*(diameter/diameter_nominal)^(n_D + 2);
   annotation (defaultComponentName="flowCurve",
   Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                              Ellipse(

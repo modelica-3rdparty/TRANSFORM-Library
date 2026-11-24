@@ -31,8 +31,17 @@ partial model PartialPowerChar
         tab="Internal Interface", group="Nominal Operating Parameters"));
 
   SI.Power W "Power consumption";
-  SItf.NonDim affinityLaw_flow = (N/N_nominal)*(diameter/diameter_nominal)^3 "Affinity law for scaling";
-  SItf.NonDim affinityLaw_power = Medium.density(state)/d_nominal*(N/N_nominal)^3*(diameter/diameter_nominal)^5 "Affinity law for scaling";
+  parameter TRANSFORM.Fluid.Types.ImpellerScaling impellerScaling=
+    TRANSFORM.Fluid.Types.ImpellerScaling.Similar
+    "Affinity law for a diameter other than diameter_nominal" annotation (Evaluate=true,
+      Dialog(tab="Internal Interface", group="Nominal Operating Parameters"));
+protected
+  final parameter Real n_D=if impellerScaling == TRANSFORM.Fluid.Types.ImpellerScaling.Similar
+       then 3 else 1
+    "Exponent of diameter/diameter_nominal in the flow affinity law (power: n_D + 2)";
+public
+  SItf.NonDim affinityLaw_flow = (N/N_nominal)*(diameter/diameter_nominal)^n_D "Affinity law for scaling";
+  SItf.NonDim affinityLaw_power = Medium.density(state)/d_nominal*(N/N_nominal)^3*(diameter/diameter_nominal)^(n_D + 2) "Affinity law for scaling";
 
   annotation (defaultComponentName="flowCurve",
   Icon(coordinateSystem(preserveAspectRatio=false), graphics={

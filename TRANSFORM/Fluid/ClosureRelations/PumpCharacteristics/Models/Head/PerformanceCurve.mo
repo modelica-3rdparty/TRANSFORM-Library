@@ -23,8 +23,8 @@ model PerformanceCurve
       d_curve,
       N_nominal/N_nominal) "Used for simplified initialization model";
 protected
-  Real r_D3=(diameter/diameter_nominal)^3
-    "Affinity law: flow scales with the impeller diameter cubed";
+  Real r_D_flow=(diameter/diameter_nominal)^n_D
+    "Affinity law: how flow scales with the impeller diameter";
   constant SI.Height unit_head=1;
   constant SI.VolumeFlowRate unit_V_flow=1;
 equation
@@ -37,7 +37,7 @@ equation
   if checkValve then
     head = homotopy(if s > 0 then affinityLaw*
       TRANSFORM.Fluid.ClosureRelations.PumpCharacteristics.Functions.PerformanceCurve(
-            V_flow/r_D3,
+            V_flow/r_D_flow,
             V_flow_curve,
             head_curve,
             d_curve,
@@ -57,7 +57,7 @@ equation
   else
     head = homotopy(affinityLaw*
       TRANSFORM.Fluid.ClosureRelations.PumpCharacteristics.Functions.PerformanceCurve(
-            V_flow/r_D3,
+            V_flow/r_D_flow,
             V_flow_curve,
             head_curve,
             d_curve,
@@ -73,9 +73,10 @@ equation
         coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
 <p>Pump head characteristic in the form
-<code>head = affinityLaw * f(V_flow/(diameter/diameter_nominal)&sup3;, V_flow_curve, head_curve, N/N_nominal)</code>, solving for
+<code>head = affinityLaw * f(V_flow/(diameter/diameter_nominal)^n_D, V_flow_curve, head_curve, N/N_nominal)</code>, solving for
 head given volumetric flow, scaled by the affinity laws: the curve is read at the flow
-<code>V_flow/(diameter/diameter_nominal)&sup3;</code> (the function itself divides it by the
+<code>V_flow/(diameter/diameter_nominal)^n_D</code>, with <code>n_D</code> = 3 for a similar pump or 1 for a
+trimmed impeller (the function itself divides it by the
 relative speed) and its head is multiplied by
 <code>affinityLaw = (N/N_nominal)&sup2; (diameter/diameter_nominal)&sup2;</code>.</p>
 

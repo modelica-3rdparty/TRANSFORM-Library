@@ -15,7 +15,7 @@ model PerformanceCurve   "Cubic spline of a characteristic curve of power vs. vo
 equation
   W = homotopy(affinityLaw*
     TRANSFORM.Fluid.ClosureRelations.PumpCharacteristics.Functions.PerformanceCurve(
-          V_flow/(diameter/diameter_nominal)^3,
+          V_flow/(diameter/diameter_nominal)^n_D,
           V_flow_curve,
           W_curve,
           d_curve,
@@ -30,8 +30,8 @@ equation
         coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
 <p>Pump shaft-power characteristic in the form
-<code>W = affinityLaw * f(V_flow/(diameter/diameter_nominal)&sup3;, V_flow_curve, W_curve, N/N_nominal)</code>,
-where <code>affinityLaw = (N/N_nominal)&sup3; (diameter/diameter_nominal)&#8309;</code> as expected
+<code>W = affinityLaw * f(V_flow/(diameter/diameter_nominal)^n_D, V_flow_curve, W_curve, N/N_nominal)</code>,
+where <code>affinityLaw = (N/N_nominal)&sup3; (diameter/diameter_nominal)^(n_D + 2)</code> as expected
 from the power-affinity relation. A <code>homotopy</code> fallback gives a linear power-vs-flow expression
 during initialisation.</p>
 

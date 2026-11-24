@@ -20,6 +20,7 @@ partial model PartialPump_nom
     final N=N,
     final diameter=diameter,
     final N_nominal=N_nominal,
+    final impellerScaling=impellerScaling,
     final diameter_nominal=diameter_nominal,
     final V_flow_start=V_flow_start,
     final head_start=head_start,
@@ -45,6 +46,7 @@ partial model PartialPump_nom
     final N=N,
     final diameter=diameter,
     final N_nominal=N_nominal,
+    final impellerScaling=impellerScaling,
     final diameter_nominal=diameter_nominal,
     final d_nominal = d_nominal,
     final W_nominal=W_nominal)
@@ -65,6 +67,7 @@ partial model PartialPump_nom
     final N=N,
     final diameter=diameter,
     final N_nominal=N_nominal,
+    final impellerScaling=impellerScaling,
     final diameter_nominal=diameter_nominal)
     annotation (Placement(transformation(extent={{-76,84},{-64,96}})));
 
@@ -72,6 +75,11 @@ partial model PartialPump_nom
     annotation (Dialog(group="Nominal Conditions: Single pump basis"));
   parameter SI.Length diameter_nominal=0.1524 "Impeller diameter"
     annotation (Dialog(group="Nominal Conditions: Single pump basis"));
+  parameter TRANSFORM.Fluid.Types.ImpellerScaling impellerScaling=
+    TRANSFORM.Fluid.Types.ImpellerScaling.Similar
+    "Affinity law for a diameter other than diameter_nominal: a similar pump or a trimmed impeller"
+    annotation (Evaluate=true, Dialog(group=
+          "Characteristics: Based on single pump nominal conditions"));
   parameter SI.PressureDifference dp_nominal=p_b_start - p_a_start
     "Pressure increase"
     annotation (Dialog(group="Nominal Conditions: Single pump basis"));

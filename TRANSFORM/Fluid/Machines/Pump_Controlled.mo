@@ -74,6 +74,7 @@ equation
     Icon(coordinateSystem(preserveAspectRatio=false)),
     Diagram(coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
+<p>A <code>diameter</code> other than <code>diameter_nominal</code> follows <code>impellerScaling</code>: with <code>Similar</code> (default) it is a geometrically similar pump, flow ~ D<sup>3</sup>, head ~ D<sup>2</sup>, power ~ D<sup>5</sup>; with <code>Trimmed</code> it is the same pump with its impeller cut down, flow ~ D, head ~ D<sup>2</sup>, power ~ D<sup>3</sup> and the same efficiency. The trimming law is an approximation for small cuts; where the manufacturer gives a curve for the trimmed diameter, that curve is more accurate.</p>
 <p>Quasidimensionless group (corrected, referred, or non-dimensional) definitions are summarised in Chart 4.2 of Source 1. Additional resource for corrected or referred speed: https://en.wikipedia.org/wiki/Corrected_speed.</p>
 <p><br>Sources</p>
 <p>1. P. P. WALSH and P. FLETCHER, <i>Gas Turbine Performance</i>, 2. ed., [repr.], Blackwell Science, Oxford (2004). </p>

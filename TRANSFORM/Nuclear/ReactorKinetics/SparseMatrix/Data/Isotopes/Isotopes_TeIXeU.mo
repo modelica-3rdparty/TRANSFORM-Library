@@ -5,6 +5,9 @@ record Isotopes_TeIXeU
   // fission cross-section and applies every other cross-section to that flux. U-235 at 0.0253 eV:
   // fission 587.3 b, capture 99.5 b (absorption 686.8 b), nu 2.43; Xe-135 absorption 2.6e6 b.
   // Production of Te-135 and Xe-135 is yield per fission times the fission cross-section.
+  // These are textbook 2200 m/s values, not a particular core's spectrum-averaged one-group
+  // cross-sections, which are usually lower; for a specific reactor, modify the record with that
+  // core's effective values.
   extends PartialIsotopes(
     extraPropertiesNames={"te135","i135","xe135","u235"},
     SIZZZAAA= fill(0, nC),

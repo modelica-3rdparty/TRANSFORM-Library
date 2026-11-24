@@ -8,7 +8,9 @@ model QuadraticCurve
 equation
     //eta = homotopy(affinityLaw*TRANSFORM.Math.QuadraticCurve(V_flow, V_flow_curve, eta_curve),
     //dp_start/(rho_start*Modelica.Constants.g_n));
-    eta = TRANSFORM.Math.quadraticCurve(V_flow, V_flow_curve, eta_curve);
+    // Read at the flow scaled to the nominal impeller (affinity law, flow ~ D^3). Not scaled by
+    // speed: that would change every result at off-nominal speed.
+    eta = TRANSFORM.Math.quadraticCurve(V_flow/(diameter/diameter_nominal)^3, V_flow_curve, eta_curve);
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end QuadraticCurve;

@@ -240,6 +240,7 @@ equation
 <ul>
 <li><code>W</code> is the power of one pump; the fluid takes <code>W_total = nParallel*W</code>.</li>
 <li>The default <code>PowerChar</code> draws 0 W. With <code>use_powerCharacteristic = true</code>, give it the pump's power, or the efficiency is a division by zero.</li>
+<li>By default the pump holds no fluid (<code>V = 0</code>), so its energy balance is algebraic and does not fix its specific enthalpy at zero flow. If the flow through the pump may stop or reverse, give it a volume <code>V &gt; 0</code>, as <code>Modelica.Fluid.Machines</code> recommends; otherwise a solver may find a wrong enthalpy there, at initialization or at an event.</li>
 </ul>
 <h4>References</h4>
 <p>Adapted from <code>Modelica.Fluid.Machines.BaseClasses.PartialPump</code> in the Modelica Standard Library.</p>

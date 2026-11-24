@@ -20,6 +20,8 @@ protected
   constant SI.VolumeFlowRate unit_V_flow=1;
 
 equation
+  // The curve function is called with a relative speed of 1: affinityLaw_head and
+  // affinityLaw_flow already scale for speed, and the function would divide by it again.
   if checkValve then
     V_flow = homotopy(if s > 0 then s else 0, s);
   else
@@ -31,20 +33,20 @@ equation
       head_curve,
       V_flow_curve,
       d_curve,
-      N/N_nominal) else 0;
+      1) else 0;
   else
     V_flow =affinityLaw_flow*TRANSFORM.Math.PerformanceCurve(
       head/affinityLaw_head,
       head_curve,
       V_flow_curve,
       d_curve,
-      N/N_nominal);
+      1);
   end if;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
 <p>Pump flow characteristic in the <em>inverted</em> form
-<code>V_flow = affinityLaw_flow * f(head/affinityLaw_head, head_curve, V_flow_curve, N/N_nominal)</code>,
+<code>V_flow = affinityLaw_flow * f(head/affinityLaw_head, head_curve, V_flow_curve)</code>,
 solving for volumetric flow given head. The affinity laws appear on both axes: the head input is
 divided by <code>(N/N_nom)&sup2;</code> to look up the curve at nominal-speed coordinates, and the
 returned nominal flow is multiplied by <code>(N/N_nom)</code> to give actual flow.</p>

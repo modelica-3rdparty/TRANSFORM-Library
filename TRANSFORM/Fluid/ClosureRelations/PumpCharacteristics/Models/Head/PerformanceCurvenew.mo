@@ -27,6 +27,8 @@ protected
   constant SI.VolumeFlowRate unit_V_flow=1;
 
 equation
+  // The curve function is called with a relative speed of 1: affinityLaw_head and
+  // affinityLaw_flow already scale for speed, and the function would divide by it again.
   if checkValve then
     head = homotopy(if s > 0 then s else 0, s);
     //V_flow = homotopy(TRANSFORM.Math.spliceTanh(V_flow,0,s,0.001),s);
@@ -40,7 +42,7 @@ equation
             head_curve,
             V_flow_curve,
             d_curve,
-            N/N_nominal) else 0;
+            1) else 0;
   else
     V_flow = affinityLaw_flow*
       TRANSFORM.Fluid.ClosureRelations.PumpCharacteristics.Functions.PerformanceCurve(
@@ -48,7 +50,7 @@ equation
             head_curve,
             V_flow_curve,
             d_curve,
-            N/N_nominal);
+            1);
   end if;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
@@ -58,7 +60,7 @@ equation
 redeclares the regular <code>PerformanceCurve</code> rather than this variant.</p>
 
 <p><b>Intent.</b> This variant rewrites the head characteristic in the inverted form
-<code>V_flow = affinityLaw_flow * f(head/affinityLaw_head, head_curve, V_flow_curve, N/N_nominal)</code>
+<code>V_flow = affinityLaw_flow * f(head/affinityLaw_head, head_curve, V_flow_curve)</code>
 &mdash; treating <code>head</code> as an input and <code>V_flow</code> as the unknown, and applying
 the pump affinity laws on <em>both</em> axes
 (<code>affinityLaw_flow = (N/N_nom)(d/d_nom)&sup3;</code>,

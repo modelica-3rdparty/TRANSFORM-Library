@@ -82,6 +82,7 @@ partial model PartialPump "Base model for centrifugal pumps"
     final N=N,
     final diameter=diameter,
     final N_nominal=N_nominal,
+    final impellerScaling=impellerScaling,
     final diameter_nominal=diameter_nominal,
     final head_nominal=head_nominal,
     final checkValve=checkValve)
@@ -105,6 +106,7 @@ partial model PartialPump "Base model for centrifugal pumps"
     final N=N,
     final diameter=diameter,
     final N_nominal=N_nominal,
+    final impellerScaling=impellerScaling,
     final diameter_nominal=diameter_nominal,
     final W_nominal=W_nominal,
     final m_flow=m_flow)
@@ -124,6 +126,7 @@ partial model PartialPump "Base model for centrifugal pumps"
     final N=N,
     final diameter=diameter,
     final N_nominal=N_nominal,
+    final impellerScaling=impellerScaling,
     final diameter_nominal=diameter_nominal)
     annotation (Placement(transformation(extent={{-76,84},{-64,96}})));
   // Nominal conditions: Single pump basis
@@ -131,6 +134,11 @@ partial model PartialPump "Base model for centrifugal pumps"
     annotation (Dialog(group="Nominal Conditions: Single pump basis"));
   parameter SI.Length diameter_nominal=0.1 "Impeller diameter"
     annotation (Dialog(group="Nominal Conditions: Single pump basis"));
+  parameter TRANSFORM.Fluid.Types.ImpellerScaling impellerScaling=
+    TRANSFORM.Fluid.Types.ImpellerScaling.Similar
+    "Affinity law for a diameter other than diameter_nominal: a similar pump or a trimmed impeller"
+    annotation (Evaluate=true, Dialog(group=
+          "Characteristics: Based on single pump nominal conditions"));
   parameter SI.PressureDifference dp_nominal=1e5 "Pressure increase"
     annotation (Dialog(group="Nominal Conditions: Single pump basis"));
   parameter SI.MassFlowRate m_flow_nominal=1 "Mass flow rate"
@@ -239,6 +247,7 @@ equation
 <h4>Use</h4>
 <ul>
 <li><code>W</code> is the power of one pump; the fluid takes <code>W_total = nParallel*W</code>.</li>
+<li>A <code>diameter</code> other than <code>diameter_nominal</code> follows <code>impellerScaling</code>: with <code>Similar</code> (default) it is a geometrically similar pump, flow ~ D<sup>3</sup>, head ~ D<sup>2</sup>, power ~ D<sup>5</sup>; with <code>Trimmed</code> it is the same pump with its impeller cut down, flow ~ D, head ~ D<sup>2</sup>, power ~ D<sup>3</sup> and the same efficiency. The trimming law is an approximation for small cuts; where the manufacturer gives a curve for the trimmed diameter, that curve is more accurate.</li>
 <li>The default <code>PowerChar</code> draws 0 W. With <code>use_powerCharacteristic = true</code>, give it the pump's power, or the efficiency is a division by zero.</li>
 <li>By default the pump holds no fluid (<code>V = 0</code>), so its energy balance is algebraic and does not fix its specific enthalpy at zero flow. If the flow through the pump may stop or reverse, give it a volume <code>V &gt; 0</code>, as <code>Modelica.Fluid.Machines</code> recommends; otherwise a solver may find a wrong enthalpy there, at initialization or at an event.</li>
 </ul>

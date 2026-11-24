@@ -30,25 +30,25 @@ protected
 equation
   assert(head_shutoff > head_nominal,
     "Quadratic pump curve: head_shutoff must be greater than head_nominal");
-  // head = r_D^2*r_N^2*f(V_flow/(r_N*r_D^3)) with f(q) = head_shutoff - k_res*q^2, written so
-  // that nothing divides by the speed: at N = 0 the head is -k_res*V_flow*|V_flow|/r_D^4.
+  // head = r_D^2*r_N^2*f(V_flow/(r_N*r_D^n_D)) with f(q) = head_shutoff - k_res*q^2, written so
+  // that nothing divides by the speed: at N = 0 the head is -k_res*V_flow*|V_flow|/r_D^(2*n_D - 2).
   // affinityLaw (from PartialFlowChar) is computed but not needed here.
   if checkValve then
     V_flow = homotopy(if s > 0 then s*unit_V_flow else 0, s*unit_V_flow);
     head = if s > 0 then head_speed - k_res*Modelica.Fluid.Utilities.regSquare(V_flow,
-      V_flow_small)/r_D^4 else head_speed - s*unit_head;
+      V_flow_small)/r_D^(2*n_D - 2) else head_speed - s*unit_head;
   else
     s = 0;
-    head = head_speed - k_res*Modelica.Fluid.Utilities.regSquare(V_flow, V_flow_small)/r_D^4;
+    head = head_speed - k_res*Modelica.Fluid.Utilities.regSquare(V_flow, V_flow_small)/r_D^(2*n_D - 2);
   end if;
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
 <p>Quadratic pump characteristic, scaled by the affinity laws:</p>
-<p><code>head = head_shutoff*r_N*|r_N|*r_D^2 - k_res*V_flow*|V_flow|/r_D^4</code></p>
-<p>with <code>r_N = N/N_nominal</code>, <code>r_D = diameter/diameter_nominal</code> and
-<code>k_res</code> set so that the curve passes through (<code>V_flow_nominal</code>,
+<p><code>head = head_shutoff*r_N*|r_N|*r_D^2 - k_res*V_flow*|V_flow|/r_D^(2*n_D - 2)</code></p>
+<p>with <code>r_N = N/N_nominal</code>, <code>r_D = diameter/diameter_nominal</code>, <code>n_D</code> = 3 for a similar pump or 1 for a trimmed
+impeller (<code>impellerScaling</code>), and <code>k_res</code> set so that the curve passes through (<code>V_flow_nominal</code>,
 <code>head_nominal</code>) at nominal speed. <code>head_shutoff</code> is the head at zero flow and
 nominal speed; its default, twice the nominal head, matches the default curve of
 <code>PerformanceCurve</code>.</p>

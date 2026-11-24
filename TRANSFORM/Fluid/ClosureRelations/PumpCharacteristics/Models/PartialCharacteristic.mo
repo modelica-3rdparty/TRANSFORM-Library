@@ -19,6 +19,15 @@ partial model PartialCharacteristic
     annotation (Dialog(tab="Internal Interface", group="Nominal Operating Parameters"));
   parameter SI.VolumeFlowRate V_flow_start
     annotation (Dialog(tab="Internal Interface", group="Initialization"));
+  parameter TRANSFORM.Fluid.Types.ImpellerScaling impellerScaling=
+    TRANSFORM.Fluid.Types.ImpellerScaling.Similar
+    "Affinity law for a diameter other than diameter_nominal" annotation (Evaluate=true,
+      Dialog(tab="Internal Interface", group="Nominal Operating Parameters"));
+protected
+  final parameter Real n_D=if impellerScaling == TRANSFORM.Fluid.Types.ImpellerScaling.Similar
+       then 3 else 1
+    "Exponent of diameter/diameter_nominal in the flow affinity law (power: n_D + 2)";
+public
   SItf.NonDim affinityLaw "Affinity law for scaling";
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));

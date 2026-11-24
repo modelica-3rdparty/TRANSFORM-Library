@@ -63,7 +63,7 @@ redeclares the regular <code>PerformanceCurve</code> rather than this variant.</
 <code>V_flow = affinityLaw_flow * f(head/affinityLaw_head, head_curve, V_flow_curve)</code>
 &mdash; treating <code>head</code> as an input and <code>V_flow</code> as the unknown, and applying
 the pump affinity laws on <em>both</em> axes
-(<code>affinityLaw_flow = (N/N_nom)(d/d_nom)</code>,
+(<code>affinityLaw_flow = (N/N_nom)(d/d_nom)&sup3;</code>,
 <code>affinityLaw_head = (N/N_nom)&sup2;(d/d_nom)&sup2;</code>) via
 <a href=\"modelica://TRANSFORM.Fluid.ClosureRelations.PumpCharacteristics.Models.Head.PartialFlowChar2\">PartialFlowChar2</a>.
 This matches the formulation already used by

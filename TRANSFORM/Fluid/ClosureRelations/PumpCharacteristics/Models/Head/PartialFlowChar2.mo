@@ -25,7 +25,7 @@ partial model PartialFlowChar2
   parameter Boolean checkValve "=true then no reverse flow" annotation (Dialog(tab="Internal Interface",group="Inputs"));
   parameter SI.Height head_nominal "Nominal head" annotation (Dialog(tab="Internal Interface",group="Nominal Operating Parameters"));
   input SI.Height head(start=head_start) "Pump pressure head" annotation (Dialog(tab="Internal Interface", group="Inputs"));
-  SItf.NonDim affinityLaw_flow = (N/N_nominal)*(diameter/diameter_nominal) "Affinity law for scaling";
+  SItf.NonDim affinityLaw_flow = (N/N_nominal)*(diameter/diameter_nominal)^3 "Affinity law for scaling";
   SItf.NonDim affinityLaw_head = (N/N_nominal)^2*(diameter/diameter_nominal)^2 "Affinity law for scaling";
 
   annotation (defaultComponentName="flowCurve",

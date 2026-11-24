@@ -24,5 +24,6 @@ equation
           rotation=-90)}),
     Documentation(info="<html>
 <p>A centrifugal pump driven through the mechanical flange <code>shaft</code>; the speed follows the shaft. With <code>nParallel</code> pumps, the shaft drives one of them: its power is <code>W</code>, and the group takes <code>W_total = nParallel*W</code>.</p>
+<p>If the flow through the pump may stop or reverse, give it a volume <code>V &gt; 0</code> (see <code>BaseClasses.PartialPump</code>).</p>
 </html>"));
 end Pump_wShaft;
